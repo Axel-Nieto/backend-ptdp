@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend_ptdp.Controllers
+namespace backend_ptdp.Usuarios
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -44,7 +44,7 @@ namespace backend_ptdp.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> ModificarUsuarios(int id, Usuarios usuarios)
         {
-            if(id != usuarios.id)
+            if (id != usuarios.id)
             {
                 return BadRequest();
             }
@@ -77,15 +77,16 @@ namespace backend_ptdp.Controllers
             _context.usuarios.Add(usuarios);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuarios", new { id = usuarios.id }, usuarios);
+            return CreatedAtAction("GetUsuarios", new { usuarios.id }, usuarios);
         }
 
+        // TODO: borrado lógico
         //DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Usuarios>> BorrarUsuarios(int id)
         {
             var usuarios = await _context.usuarios.FindAsync(id);
-            if(usuarios == null)
+            if (usuarios == null)
             {
                 return NotFound();
             }
@@ -97,9 +98,9 @@ namespace backend_ptdp.Controllers
 
         //Iniciar Sesion
         [HttpGet("{username}/{password}")]
-        public ActionResult<List<Usuarios>> GetIniciarSesion(string username,string password)
+        public ActionResult<List<Usuarios>> GetIniciarSesion(string username, string password)
         {
-            var usuarios = _context.usuarios.Where(usuario=>usuario.username.Equals(username) && usuario.password.Equals(password)).ToList();
+            var usuarios = _context.usuarios.Where(usuario => usuario.username.Equals(username) && usuario.password.Equals(password)).ToList();
             if (usuarios == null)
             {
                 return NotFound();
