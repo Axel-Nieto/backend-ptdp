@@ -12,10 +12,6 @@ namespace backend_ptdp.Models
     {
         [Key]
         public int id { get; set; }
-        public string apellido { get; set; }
-        public string nombre { get; set; }
-        public string correo { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-    }
+        public Usuario usuario { get; set; }
+        public Obra obra { get; set; }
 }
